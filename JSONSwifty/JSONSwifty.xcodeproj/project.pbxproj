@@ -17,6 +17,10 @@
 		A61CE0D11F67EC6D00CF1234 /* Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61CE0CE1F67EC6D00CF1234 /* Export.swift */; };
 		A61CE0D21F67EC6D00CF1234 /* Measuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61CE0CF1F67EC6D00CF1234 /* Measuable.swift */; };
 		A61CE0D31F67EC6D00CF1234 /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61CE0D01F67EC6D00CF1234 /* Transformable.swift */; };
+		A6AC652C1F67FB4000ACD0CA /* BuiltInBasicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AC652B1F67FB4000ACD0CA /* BuiltInBasicType.swift */; };
+		A6BCCB951F6BB1B800697F95 /* BuiltInBridgeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BCCB941F6BB1B800697F95 /* BuiltInBridgeType.swift */; };
+		A6BCCB971F6BB8A000697F95 /* EnumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BCCB961F6BB8A000697F95 /* EnumType.swift */; };
+		A6BCCB991F6BBAF800697F95 /* ExtendCustomModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BCCB981F6BBAF800697F95 /* ExtendCustomModelType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,10 @@
 		A61CE0CE1F67EC6D00CF1234 /* Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Export.swift; sourceTree = "<group>"; };
 		A61CE0CF1F67EC6D00CF1234 /* Measuable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measuable.swift; sourceTree = "<group>"; };
 		A61CE0D01F67EC6D00CF1234 /* Transformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transformable.swift; sourceTree = "<group>"; };
+		A6AC652B1F67FB4000ACD0CA /* BuiltInBasicType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuiltInBasicType.swift; sourceTree = "<group>"; };
+		A6BCCB941F6BB1B800697F95 /* BuiltInBridgeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuiltInBridgeType.swift; sourceTree = "<group>"; };
+		A6BCCB961F6BB8A000697F95 /* EnumType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumType.swift; sourceTree = "<group>"; };
+		A6BCCB981F6BBAF800697F95 /* ExtendCustomModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendCustomModelType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +146,10 @@
 				A61CE0CE1F67EC6D00CF1234 /* Export.swift */,
 				A61CE0CF1F67EC6D00CF1234 /* Measuable.swift */,
 				A61CE0D01F67EC6D00CF1234 /* Transformable.swift */,
+				A6AC652B1F67FB4000ACD0CA /* BuiltInBasicType.swift */,
+				A6BCCB941F6BB1B800697F95 /* BuiltInBridgeType.swift */,
+				A6BCCB961F6BB8A000697F95 /* EnumType.swift */,
+				A6BCCB981F6BBAF800697F95 /* ExtendCustomModelType.swift */,
 			);
 			path = JSONKit;
 			sourceTree = "<group>";
@@ -276,6 +288,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6BCCB971F6BB8A000697F95 /* EnumType.swift in Sources */,
+				A6BCCB991F6BBAF800697F95 /* ExtendCustomModelType.swift in Sources */,
+				A6BCCB951F6BB1B800697F95 /* BuiltInBridgeType.swift in Sources */,
+				A6AC652C1F67FB4000ACD0CA /* BuiltInBasicType.swift in Sources */,
 				A61CE0A21F67EC3100CF1234 /* ViewController.swift in Sources */,
 				A61CE0D21F67EC6D00CF1234 /* Measuable.swift in Sources */,
 				A61CE0A01F67EC3100CF1234 /* AppDelegate.swift in Sources */,

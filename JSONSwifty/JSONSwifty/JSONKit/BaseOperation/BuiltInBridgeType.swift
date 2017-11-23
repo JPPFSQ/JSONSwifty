@@ -72,6 +72,6 @@ extension NSDictionary: _BuiltInBridgeType {
     }
     
     func _plainValue() -> Any? {
-        return (self as? NSDictionary<String, Any>)?.plainValue()
+        return (self as? Dictionary<String, Any>)?.plainValue()
     }
 }

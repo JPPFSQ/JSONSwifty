@@ -93,7 +93,7 @@ public class HelpingMapper {
         self.specify(property: &property, name: nil, converter: converter)
     }
     
-    public func specify<T>(property: inout T, name: String, converter: @escaping(String) -> T) {
+    public func specify<T>(property: inout T, name: String?, converter: ((String) -> T)?) {
         let pointer = withUnsafePointer(to: &property) { return $0 }
         let key = pointer.hashValue
         let names = (name == nil ? nil : [name!])
@@ -143,26 +143,26 @@ public func <-- <T>(property: inout T, names: [String]) -> CustomMappingKeyValue
 }
 
 // MARK: non-optional properties
-public func <-- <Transform: TransformType>(property: inout Transform.object, transformer: Transform) -> CustomMappingKeyValueTuple {
+public func <-- <Transform: TransformType>(property: inout Transform.Object, transformer: Transform) -> CustomMappingKeyValueTuple {
     return property <-- (nil, transformer)
 }
 
-public func <-- <Transform: TransformType>(property: inout Transform.object, transformer: (String?, Transform?)) -> CustomMappingKeyValueTuple {
-    let names = (transformer.0 == nil ? [] : [transformer.0])
+public func <-- <Transform: TransformType>(property: inout Transform.Object, transformer: (String?, Transform?)) -> CustomMappingKeyValueTuple {
+    let names = (transformer.0 == nil ? [] : [transformer.0!])
     return property <-- (names, transformer.1)
 }
 
-public func <-- <Transform:TransformType>(property: inout Transform.object, transformer:([String?], Transform?)) -> CustomMappingKeyValueTuple {
+public func <-- <Transform:TransformType>(property: inout Transform.Object, transformer:([String], Transform?)) -> CustomMappingKeyValueTuple {
     let pointer = withUnsafePointer(to: &property, { return $0 })
     let key = pointer.hashValue
     
-    let assignmentClosure = { (jsonValue: Any?) -> Transform.object? in
-        return transformer.1?.transformFrom(jsonValue)
+    let assignmentClosure = { (jsonValue: Any?) -> Transform.Object? in
+        return transformer.1?.transformFromJSON(jsonValue)
     }
     
     let takeValueClosure = { (objectValue: Any?) -> Any? in
-        if let _value = objectValue as? Transform.object {
-            return transformer.1?.transformFrom(_value) as Any
+        if let _value = objectValue as? Transform.Object {
+            return transformer.1?.transformFromJSON(_value) as Any
         }
         return nil
     }
@@ -171,26 +171,26 @@ public func <-- <Transform:TransformType>(property: inout Transform.object, tran
 }
 
 // MARK: optional properties
-public func <-- <Transform: TransformType>(property: inout Transform.object?, transformer: Transform) -> CustomMappingKeyValueTuple {
+public func <-- <Transform: TransformType>(property: inout Transform.Object?, transformer: Transform) -> CustomMappingKeyValueTuple {
     return property <-- (nil, transformer)
 }
 
-public func <-- <Transform: TransformType>(property: inout Transform.object?, transformer: (String?, Transform?)) -> CustomMappingKeyValueTuple {
-    let names = (transformer.0 == nil ? [] : [transformer.0])
+public func <-- <Transform: TransformType>(property: inout Transform.Object?, transformer: (String?, Transform?)) -> CustomMappingKeyValueTuple {
+    let names = (transformer.0 == nil ? [] : [transformer.0!])
     return property <-- (names, transformer.1)
 }
 
-public func <-- <Transform:TransformType>(property: inout Transform.object?, transformer:([String?], Transform?)) -> CustomMappingKeyValueTuple {
+public func <-- <Transform:TransformType>(property: inout Transform.Object?, transformer:([String], Transform?)) -> CustomMappingKeyValueTuple {
     let pointer = withUnsafePointer(to: &property, { return $0 })
     let key = pointer.hashValue
     
-    let assignmentClosure = { (jsonValue: Any?) -> Transform.object? in
-        return transformer.1?.transformFrom(jsonValue)
+    let assignmentClosure = { (jsonValue: Any?) -> Transform.Object? in
+        return transformer.1?.transformFromJSON(jsonValue)
     }
     
     let takeValueClosure = { (objectValue: Any?) -> Any? in
-        if let _value = objectValue as? Transform.object {
-            return transformer.1?.transformFrom(_value) as Any
+        if let _value = objectValue as? Transform.Object {
+            return transformer.1?.transformFromJSON(_value) as Any
         }
         return nil
     }
@@ -199,26 +199,26 @@ public func <-- <Transform:TransformType>(property: inout Transform.object?, tra
 }
 
 // MARK: implicitly unwrap optional properties
-public func <-- <Transform: TransformType>(property: inout Transform.object!, transformer: Transform) -> CustomMappingKeyValueTuple {
+public func <-- <Transform: TransformType>(property: inout Transform.Object!, transformer: Transform) -> CustomMappingKeyValueTuple {
     return property <-- (nil, transformer)
 }
 
-public func <-- <Transform: TransformType>(property: inout Transform.object!, transformer: (String?, Transform?)) -> CustomMappingKeyValueTuple {
-    let names = (transformer.0 == nil ? [] : [transformer.0])
+public func <-- <Transform: TransformType>(property: inout Transform.Object!, transformer: (String?, Transform?)) -> CustomMappingKeyValueTuple {
+    let names = (transformer.0 == nil ? [] : [transformer.0!])
     return property <-- (names, transformer.1)
 }
 
-public func <-- <Transform:TransformType>(property: inout Transform.object!, transformer:([String?], Transform?)) -> CustomMappingKeyValueTuple {
+public func <-- <Transform:TransformType>(property: inout Transform.Object!, transformer:([String], Transform?)) -> CustomMappingKeyValueTuple {
     let pointer = withUnsafePointer(to: &property, { return $0 })
     let key = pointer.hashValue
     
-    let assignmentClosure = { (jsonValue: Any?) -> Transform.object? in
-        return transformer.1?.transformFrom(jsonValue)
+    let assignmentClosure = { (jsonValue: Any?) -> Transform.Object? in
+        return transformer.1?.transformFromJSON(jsonValue)
     }
     
     let takeValueClosure = { (objectValue: Any?) -> Any? in
-        if let _value = objectValue as? Transform.object {
-            return transformer.1?.transformFrom(_value) as Any
+        if let _value = objectValue as? Transform.Object {
+            return transformer.1?.transformFromJSON(_value) as Any
         }
         return nil
     }

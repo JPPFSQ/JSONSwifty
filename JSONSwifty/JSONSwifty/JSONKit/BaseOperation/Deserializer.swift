@@ -29,7 +29,7 @@ public extension HandyJSON {
 public extension Array where Element: HandyJSON {
     // if the JSON field finded by 'designatedPath' in 'json' is representing a array, such as '[{...}, {...}, {...}]',
     // this method converts it to a Models array
-    public static func deserializerFrom(from json: String?, designatedPath: String? = nil) -> [Element?]? {
+    public static func deserialize(from json: String?, designatedPath: String? = nil) -> [Element?]? {
         return JSONDeserializer<Element>.deserializeModelArrayFrom(json: json, designatedPath: designatedPath)
     }
     

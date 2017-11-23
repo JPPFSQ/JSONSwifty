@@ -73,30 +73,28 @@ fileprivate func assignProperty(convertedValue: Any, instance: _ExtendCustomMode
 }
 
 fileprivate func readAllChildrenFrom(mirror: Mirror) -> [(String, Any)] {
-    var children = [(label: String?, value:Any)]()
-    let mirrorChildrenCollection = AnyRandomAccessCollection(mirror.children)
+    var children = [(label: String?, value: Any)]()
+    let mirrorChildrenCollection = AnyRandomAccessCollection(mirror.children)!
     children += mirrorChildrenCollection
-    
+
     var currentMirror = mirror
-    while let supperclassChildren = currentMirror.superclassMirror?.children {
-        let randomCollection = AnyRandomAccessCollection(supperclassChildren)
+    while let superclassChildren = currentMirror.superclassMirror?.children {
+        let randomCollection = AnyRandomAccessCollection(superclassChildren)!
         children += randomCollection
         currentMirror = currentMirror.superclassMirror!
     }
-    
     var result = [(String, Any)]()
     children.forEach { (child) in
         if let _label = child.label {
             result.append((_label, child.value))
         }
     }
-    
     return result
 }
 
 fileprivate func merge(children: [(String, Any)], propertyInfos:[PropertyInfo]) -> [String: (Any, PropertyInfo?)] {
     var infoDict = [String: PropertyInfo]()
-    ProcessInfo.forEach { (child) in
+    propertyInfos.forEach { (info) in
         infoDict[info.key] = info
     }
     
@@ -125,7 +123,7 @@ extension _ExtendCustomModelType {
     }
     
     static func _transform(dict: [String: Any], to instance: inout Self) {
-        guard let properties = _getProperties(forType: Self.self) else {
+        guard let properties = getProperties(forType: Self.self) else {
             InternalLogger.logDebug("Failed when try to get properties from type: \(type(of: Self.self))")
             return
         }
@@ -144,7 +142,7 @@ extension _ExtendCustomModelType {
         let bridgedPropertyList = instance.getBridgedPropertyList()
         
         properties.forEach { (property) in
-            let isBridgedProperty = instanceIsNsObject & bridgedPropertyList.contains(property.key)
+            let isBridgedProperty = instanceIsNsObject && bridgedPropertyList.contains(property.key)
             let propAddr = rawPointer.advanced(by: property.offset)
             InternalLogger.logVerbose(property.key, "address at: ", propAddr.hashValue)
             
@@ -169,7 +167,7 @@ extension _ExtendCustomModelType {
 }
 
 extension _ExtendCustomModelType {
-    func _plainValue() -> Any {
+    func _plainValue() -> Any? {
         return Self._serializeAny(object: self)
     }
     
@@ -190,7 +188,7 @@ extension _ExtendCustomModelType {
             }
             
             let children = readAllChildrenFrom(mirror: mirror)
-            guard let properties = _getProperties(forType: type(of: object)) else {
+            guard let properties = getProperties(forType: type(of: object)) else {
                 InternalLogger.logError("Can not get properties info for type: \(type(of: object))")
                 return nil
             }
@@ -201,19 +199,19 @@ extension _ExtendCustomModelType {
             let bridgedProperty = mutableObject.getBridgedPropertyList()
             let propertyInfos = properties.map({(desc) -> PropertyInfo in
                 return PropertyInfo(key: desc.key, type: desc.type, address: head.advanced(by: desc.offset),
-                                    brideged: instanceIsNsObject && bridgedProperty.contains(desc.key))
+                                    bridged: instanceIsNsObject && bridgedProperty.contains(desc.key))
             })
             
             mutableObject.mapping(mapper: mapper)
             let requiredInfo = merge(children: children, propertyInfos: propertyInfos)
             return _serializeModelObject(instance: mutableObject, properties: requiredInfo, mapper: mapper) as Any
         default:
-            object.plainValue()
+            return object.plainValue()
         }
     }
     
     static func _serializeModelObject(instance: _ExtendCustomModelType, properties: [String: (Any, PropertyInfo?)], mapper: HelpingMapper) -> [String: Any] {
-        var dict = [String: Any]
+        var dict = [String: Any]()
         for (key, property) in properties {
             var realKey = key
             var realValue = property.0
@@ -229,7 +227,7 @@ extension _ExtendCustomModelType {
                 
                 if let mappingHandler = mapper.getMappingHandler(key: info.address.hashValue) {
                     // if specific key is set replace the label
-                    if let mappingPaths = mappingHandler.mappingPahts, mappingPaths.count > 0 {
+                    if let mappingPaths = mappingHandler.mappingPaths, mappingPaths.count > 0 {
                         // take the first path, last segment if more than one
                         realKey = mappingPaths[0].segments.last!
                     }

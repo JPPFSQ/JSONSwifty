@@ -197,7 +197,7 @@ extension ImplicitlyUnwrappedOptional: _BuiltInBasicType {
 extension Collection {
     static func _collectionTransform(from object: Any) -> [Iterator.Element]? {
         guard let arr = object as? [Any] else {
-            internalLogger.logDebug("Expect object to be an array but it's not")
+            InternalLogger.logDebug("Expect object to be an array but it's not")
             return nil
         }
         
